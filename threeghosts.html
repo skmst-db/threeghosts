@@ -1,0 +1,1147 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>スリーゴースト ｜ 全国公演スケジュール</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;500;600;800&family=Noto+Sans+JP:wght@300;400;500;700&family=JetBrains+Mono:wght@400;500;600&display=swap');
+
+        :root {
+            --canvas: #EBEDF1;
+            --canvas-deep: #E0E3E9;
+            --card: #FAFAFB;
+            --ink: #1C2230;
+            --ink-soft: #5B6472;
+            --ink-faint: #8B93A0;
+            --line: #CBD2DC;
+            --line-soft: #DCE0E7;
+            --red: #AE2E2C;
+            --red-soft: #D8595A;
+            --gold: #A9821E;
+            --gold-soft: #E8D7A0;
+            --violet: #6C5B8E;
+            --violet-soft: #DCD4EC;
+            --mono: 'JetBrains Mono', monospace;
+            --serif: 'Shippori Mincho', serif;
+            --sans: 'Noto Sans JP', sans-serif;
+            --radius: 14px;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background: var(--canvas);
+            color: var(--ink);
+            font-family: var(--sans);
+            -webkit-font-smoothing: antialiased;
+            line-height: 1.6;
+        }
+
+        a {
+            color: inherit;
+        }
+
+        .page-outer {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 24px 80px;
+        }
+
+        .layout {
+            display: flex;
+            align-items: flex-start;
+            gap: 40px;
+        }
+
+        /* ---------- LEFT: YouTube panel ---------- */
+        .layout-left {
+            flex: 0 0 45%;
+            max-width: 480px;
+            align-self: stretch;
+        }
+
+        .sticky-video-container {
+            position: sticky;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        .yt-label {
+            font-family: var(--mono);
+            font-size: 9px;
+            letter-spacing: 0.14em;
+            color: var(--ink-faint);
+            text-transform: uppercase;
+            margin-bottom: 8px;
+        }
+
+        .yt-wrap {
+            position: relative;
+            width: 100%;
+            padding-top: 56.25%;
+            /* 16:9 */
+            border-radius: var(--radius);
+            overflow: hidden;
+            background: #0d0d0d;
+            box-shadow: 0 4px 24px -8px rgba(28, 34, 48, 0.28);
+        }
+
+        .yt-wrap iframe {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        .yt-caption {
+            margin-top: 10px;
+            font-size: 11.5px;
+            color: var(--ink-faint);
+            line-height: 1.5;
+        }
+
+        /* ---------- RIGHT: schedule content ---------- */
+        .layout-right {
+            flex: 1 1 0;
+            min-width: 0;
+        }
+
+        .page {
+            padding: 0;
+            position: relative;
+        }
+
+        /* ---------- RESPONSIVE ---------- */
+        @media (max-width: 900px) {
+            .layout {
+                flex-direction: column;
+                gap: 0;
+            }
+
+            .layout-left {
+                flex: none;
+                width: 100%;
+                max-width: none;
+                position: static;
+                order: 2;
+                /* video below content on mobile */
+                margin-top: 40px;
+                padding-bottom: 24px;
+            }
+
+            .sticky-video-container {
+                position: static;
+                transform: none;
+            }
+
+            .layout-right {
+                order: 1;
+                width: 100%;
+            }
+
+            .page-outer {
+                padding: 0 16px 60px;
+            }
+        }
+
+        /* ---------- HERO ---------- */
+        .hero {
+            padding: 64px 0 40px;
+            text-align: center;
+        }
+
+        .eyebrow {
+            font-family: var(--mono);
+            font-size: 11px;
+            letter-spacing: 0.16em;
+            color: var(--ink-soft);
+            text-transform: uppercase;
+        }
+
+        .hero h1 {
+            font-family: var(--serif);
+            font-weight: 800;
+            font-size: clamp(34px, 8vw, 52px);
+            margin: 14px 0 6px;
+            letter-spacing: 0.04em;
+        }
+
+        .hero-sub {
+            display: block;
+            font-size: 0.42em;
+            font-weight: 500;
+            color: var(--ink-soft);
+            letter-spacing: 0.18em;
+            margin-top: 10px;
+        }
+
+        .hero-link {
+            display: inline-block;
+            margin-top: 6px;
+            font-size: 12.5px;
+            color: var(--ink-soft);
+            text-decoration: none;
+            border-bottom: 1px solid var(--line);
+        }
+
+        .hero-link:hover {
+            color: var(--red);
+            border-color: var(--red);
+        }
+
+        .next-banner {
+            position: relative;
+            z-index: 1;
+            margin: 28px auto 0;
+            max-width: 480px;
+            background: var(--card);
+            border: 1px solid var(--line);
+            border-radius: var(--radius);
+            padding: 16px 22px;
+            box-shadow: 0 1px 0 rgba(0, 0, 0, 0.02), 0 10px 24px -16px rgba(28, 34, 48, 0.25);
+        }
+
+        .next-banner .nb-eyebrow {
+            font-family: var(--mono);
+            font-size: 10px;
+            letter-spacing: 0.14em;
+            color: var(--gold);
+            text-transform: uppercase;
+        }
+
+        .next-banner .nb-main {
+            font-family: var(--serif);
+            font-size: 18px;
+            margin-top: 4px;
+            font-weight: 600;
+        }
+
+        .next-banner .nb-main b {
+            color: var(--red);
+            font-size: 1.25em;
+            font-weight: 800;
+            font-family: var(--sans);
+        }
+
+        .next-banner .nb-sub {
+            margin-top: 4px;
+            font-size: 12.5px;
+            color: var(--ink-soft);
+        }
+
+        /* ---------- STATS GRID ---------- */
+        .stats-grid {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            justify-content: center;
+            max-width: 480px;
+            margin: 14px auto 0;
+        }
+
+        .stat-card {
+            flex: 1 1 130px;
+            background: var(--card);
+            border: 1px solid var(--line);
+            border-radius: 12px;
+            padding: 11px 10px 12px;
+            text-align: center;
+        }
+
+        .stat-card .sc-eyebrow {
+            font-family: var(--mono);
+            font-size: 9px;
+            letter-spacing: 0.1em;
+            color: var(--ink-faint);
+            text-transform: uppercase;
+        }
+
+        .stat-card .sc-value {
+            font-family: var(--serif);
+            font-weight: 700;
+            font-size: 21px;
+            margin-top: 3px;
+            color: var(--ink);
+        }
+
+        .stat-card .sc-value small {
+            font-family: var(--sans);
+            font-weight: 500;
+            font-size: 0.52em;
+            color: var(--ink-soft);
+            margin-left: 2px;
+        }
+
+        .stat-card.clock .sc-value {
+            font-family: var(--mono);
+            font-size: 15px;
+            letter-spacing: 0.01em;
+        }
+
+        .stat-card.clock .sc-value .clock-date {
+            display: block;
+            font-size: 0.62em;
+            color: var(--ink-soft);
+            font-family: var(--sans);
+            margin-bottom: 2px;
+        }
+
+        /* ---------- TIMELINE CLOCK ---------- */
+        .timeline-clock {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 18px;
+            padding: 9px 14px;
+            background: var(--card);
+            border: 1px solid var(--line);
+            border-radius: 10px;
+            font-family: var(--mono);
+        }
+
+        .tc-label {
+            font-size: 9px;
+            letter-spacing: 0.13em;
+            color: var(--ink-faint);
+            text-transform: uppercase;
+            white-space: nowrap;
+        }
+
+        .tc-sep {
+            width: 1px;
+            height: 14px;
+            background: var(--line);
+            flex-shrink: 0;
+        }
+
+        .tc-date {
+            font-size: 11.5px;
+            color: var(--ink-soft);
+            white-space: nowrap;
+        }
+
+        .tc-time {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--ink);
+            letter-spacing: 0.04em;
+            margin-left: auto;
+            white-space: nowrap;
+        }
+
+        /* ---------- ROUTE / STATIONS ---------- */
+        .route-wrap {
+            margin-top: 46px;
+            position: relative;
+        }
+
+        .stations {
+            position: relative;
+            padding-left: 34px;
+        }
+
+        .stations::before {
+            content: '';
+            position: absolute;
+            left: 9px;
+            top: 8px;
+            bottom: 8px;
+            width: 1px;
+            background: linear-gradient(to bottom, var(--line) 0%, var(--line) 100%);
+        }
+
+        .ghost-marker {
+            position: absolute;
+            left: 9px;
+            top: 0;
+            width: 26px;
+            height: 26px;
+            transform: translate(-50%, -50%);
+            z-index: 3;
+            transition: top .4s ease;
+        }
+
+        .ghost-marker svg {
+            width: 26px;
+            height: 26px;
+            display: block;
+            filter: drop-shadow(0 2px 4px rgba(28, 34, 48, 0.25));
+            animation: float 3.4s ease-in-out infinite;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .ghost-marker svg {
+                animation: none;
+            }
+        }
+
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-4px);
+            }
+        }
+
+        .station {
+            position: relative;
+            padding-bottom: 46px;
+        }
+
+        .station:last-child {
+            padding-bottom: 4px;
+        }
+
+        .station-marker {
+            position: absolute;
+            left: -34px;
+            top: 2px;
+            width: 19px;
+            height: 19px;
+            border-radius: 50%;
+            background: var(--card);
+            border: 2px solid var(--ink);
+            z-index: 2;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .station[data-status="ongoing"] .station-marker {
+            border-color: var(--red);
+            box-shadow: 0 0 0 4px rgba(174, 46, 44, 0.14);
+        }
+
+        .station[data-status="past"] .station-marker {
+            border-color: var(--violet);
+            background: var(--violet-soft);
+        }
+
+        .station-marker .mk-ghost {
+            width: 11px;
+            height: 11px;
+            color: #4B3E73;
+        }
+
+        .station-head {
+            display: flex;
+            align-items: baseline;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 2px;
+        }
+
+        .city-block {
+            display: flex;
+            align-items: baseline;
+            gap: 9px;
+        }
+
+        .city-eyebrow {
+            font-family: var(--mono);
+            font-size: 10px;
+            color: var(--ink-faint);
+            letter-spacing: 0.1em;
+        }
+
+        .city-name {
+            font-family: var(--serif);
+            font-size: 23px;
+            font-weight: 700;
+        }
+
+        .venue-name {
+            font-size: 13px;
+            color: var(--ink-soft);
+            flex-basis: 100%;
+        }
+
+        .countdown-badge {
+            margin-left: auto;
+            font-family: var(--mono);
+            font-size: 11.5px;
+            padding: 4px 10px;
+            border-radius: 999px;
+            white-space: nowrap;
+            border: 1px solid var(--line);
+            color: var(--ink-soft);
+        }
+
+        .station[data-status="upcoming"] .countdown-badge {
+            color: var(--red);
+            border-color: var(--red-soft);
+            background: rgba(174, 46, 44, 0.06);
+        }
+
+        .station[data-status="ongoing"] .countdown-badge {
+            color: #fff;
+            background: var(--red);
+            border-color: var(--red);
+        }
+
+        .station[data-status="past"] .countdown-badge {
+            color: var(--violet);
+            border-color: var(--violet-soft);
+            background: var(--violet-soft);
+        }
+
+        .date-range {
+            font-size: 12px;
+            color: var(--ink-faint);
+            margin: 6px 0 14px;
+        }
+
+        .chip-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+            margin-bottom: 14px;
+        }
+
+        .month-block {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .month-label {
+            font-family: var(--mono);
+            font-size: 11px;
+            letter-spacing: 0.06em;
+            color: var(--ink-faint);
+            margin-bottom: 1px;
+        }
+
+        .weekday-row {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 5px;
+        }
+
+        .weekday-row span {
+            text-align: center;
+            font-family: var(--mono);
+            font-size: 10px;
+            color: var(--ink-faint);
+        }
+
+        .weekday-row span.wd-sun {
+            color: var(--red);
+        }
+
+        .weekday-row span.wd-sat {
+            color: var(--red);
+        }
+
+        .month-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 5px;
+        }
+
+        .chip {
+            min-height: 50px;
+            border-radius: 9px;
+            border: 1px solid var(--line-soft);
+            background: var(--card);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 2px;
+            padding: 5px 1px;
+            cursor: default;
+            font-family: var(--sans);
+            transition: transform .12s ease, box-shadow .12s ease, border-color .12s ease;
+        }
+
+        .chip.pad {
+            visibility: hidden;
+            border: none;
+            background: none;
+        }
+
+        .chip.outside {
+            border-color: transparent;
+            background: none;
+            opacity: 0.34;
+        }
+
+        .chip.has-show {
+            cursor: pointer;
+            border-color: var(--ink);
+        }
+
+        .chip.has-show:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 14px -8px rgba(28, 34, 48, 0.35);
+            border-color: var(--red);
+        }
+
+        .chip.rest {
+            opacity: 0.42;
+        }
+
+        .chip-day {
+            font-size: 13.5px;
+            font-weight: 700;
+            line-height: 1;
+        }
+
+        .chip-wd {
+            display: none;
+        }
+
+        .chip.wd-sun .chip-day {
+            color: var(--red);
+        }
+
+        .chip.wd-sat .chip-day {
+            color: var(--red);
+        }
+
+        .chip.wd-holiday .chip-day {
+            color: var(--red);
+        }
+
+        .chip-times {
+            display: flex;
+            gap: 3px;
+            margin-top: 1px;
+            min-height: 6px;
+        }
+
+        .chip-times .t {
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            background: var(--ink);
+        }
+
+        .chip-times .t.preview {
+            background: none;
+            color: var(--gold);
+            font-size: 10px;
+            line-height: 5px;
+            width: auto;
+            height: auto;
+        }
+
+        @media (max-width:380px) {
+            .chip {
+                min-height: 42px;
+            }
+
+            .chip-day {
+                font-size: 12px;
+            }
+        }
+
+        .station-actions {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            flex-wrap: wrap;
+        }
+
+        .detail-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 13px;
+            font-weight: 600;
+            text-decoration: none;
+            color: var(--ink);
+            border-bottom: 1px solid var(--ink);
+            padding-bottom: 2px;
+        }
+
+        .detail-link:hover {
+            color: var(--red);
+            border-color: var(--red);
+        }
+
+        .note {
+            font-size: 11.5px;
+            color: var(--ink-faint);
+        }
+
+        /* ---------- FOOTER ---------- */
+        .page-footer {
+            margin-top: 54px;
+            padding-top: 24px;
+            border-top: 1px solid var(--line-soft);
+            text-align: center;
+            font-size: 12px;
+            color: var(--ink-faint);
+        }
+
+        .page-footer p {
+            margin: 4px 0;
+        }
+
+        .page-footer a {
+            text-decoration: underline;
+        }
+
+        @media (max-width:480px) {
+            .countdown-badge {
+                margin-left: 0;
+            }
+
+            .station-head {
+                gap: 6px;
+            }
+
+            .city-name {
+                font-size: 21px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="page-outer">
+        <div class="layout">
+
+            <!-- LEFT: YouTube video -->
+            <aside class="layout-left">
+                <div class="sticky-video-container">
+                    <!-- Video 1 -->
+                    <div class="video-block">
+                        <div class="yt-label">Official Teaser</div>
+                        <div class="yt-wrap">
+                            <iframe src="https://www.youtube.com/embed/dF2_LxSuT2A" title="スリーゴースト 公式PV"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                allowfullscreen loading="lazy"></iframe>
+                        </div>
+                    </div>
+
+                    <!-- Video 2 -->
+                    <div class="video-block" style="margin-top: 24px;">
+                        <div class="yt-label">Sakai Masato's Interview</div>
+                        <div class="yt-wrap">
+                            <iframe src="https://www.youtube.com/embed/QNPMGnr6kKQ" title="スリーゴースト スポット映像"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                allowfullscreen loading="lazy"></iframe>
+                        </div>
+                    </div>
+                </div>
+            </aside>
+
+            <!-- RIGHT: schedule content -->
+            <div class="layout-right">
+                <div class="page">
+
+                    <div class="hero">
+                        <div class="eyebrow">PARCO PRODUCE 2026 — 堺雅人 主演</div>
+                        <h1>スリーゴースト<span class="hero-sub">全国公演スケジュール</span></h1>
+                        <a class="hero-link" href="https://stage.parco.jp/program/threeghosts/" target="_blank"
+                            rel="noopener">作品詳細はこちら（PARCO STAGE 公式）</a>
+                        <div class="next-banner" id="nextBanner"></div>
+                        <div class="stats-grid" id="statsGrid"></div>
+                    </div>
+
+                    <div class="route-wrap">
+                        <div class="timeline-clock" id="timelineClock">
+                            <span class="tc-label">JAPAN STANDARD TIME</span>
+                            <span class="tc-sep"></span>
+                            <span class="tc-date" id="tcDate"></span>
+                            <span class="tc-time" id="tcTime"></span>
+                        </div>
+                        <div class="stations" id="stations">
+                            <div class="ghost-marker" id="ghostMarker">
+                                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path
+                                        d="M4 21V10.5C4 6.36 7.36 3 11.5 3H12.5C16.64 3 20 6.36 20 10.5V21L17 19L14.5 21L12 19L9.5 21L7 19L4 21Z"
+                                        fill="#C9A227" opacity="0.92" />
+                                    <circle cx="9.6" cy="10.6" r="1.15" fill="#1C2230" />
+                                    <circle cx="14.4" cy="10.6" r="1.15" fill="#1C2230" />
+                                </svg>
+                            </div>
+                            <!-- stations injected by JS -->
+                        </div>
+                    </div>
+
+                    <div class="page-footer">
+                        <p>出演：堺雅人・倉科カナ・伊勢佳世・迫田孝也・sara・小日向星一／高畑淳子・段田安則</p>
+                        <p>本ページは <a href="https://stage.parco.jp/program/threeghosts/" target="_blank"
+                                rel="noopener">PARCO
+                                STAGE公式サイト</a> の公開情報をもとに作成した非公式の観覧用カレンダーです。最新の情報・上演時間・チケット詳細は必ず各会場の公式ページでご確認ください。</p>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        (function () {
+
+            const GHOST_ICON = '<svg class="mk-ghost" viewBox="0 0 24 24" fill="currentColor"><path d="M4 21V10.5C4 6.36 7.36 3 11.5 3H12.5C16.64 3 20 6.36 20 10.5V21L17 19L14.5 21L12 19L9.5 21L7 19L4 21Z"/></svg>';
+
+            const venues = [
+                {
+                    city: "東京", cityEn: "TOKYO",
+                    venue: "PARCO劇場",
+                    url: "https://stage.parco.jp/program/threeghosts/10971",
+                    start: "2026-10-06", end: "2026-10-27",
+                    note: "☆10/6(火)18:00＝プレビュー公演",
+                    preview: ["2026-10-06"],
+                    shows: {
+                        "2026-10-06": ["18:00"],
+                        "2026-10-07": ["18:00"],
+                        "2026-10-09": ["13:00"],
+                        "2026-10-10": ["13:00", "18:00"],
+                        "2026-10-11": ["13:00"],
+                        "2026-10-12": ["13:00"],
+                        "2026-10-13": ["13:00", "18:00"],
+                        "2026-10-15": ["13:00"],
+                        "2026-10-16": ["13:00"],
+                        "2026-10-17": ["13:00", "18:00"],
+                        "2026-10-18": ["13:00"],
+                        "2026-10-19": ["13:00"],
+                        "2026-10-20": ["13:00", "18:00"],
+                        "2026-10-22": ["13:00"],
+                        "2026-10-23": ["13:00", "18:00"],
+                        "2026-10-24": ["13:00"],
+                        "2026-10-25": ["13:00", "18:00"],
+                        "2026-10-26": ["13:00"],
+                        "2026-10-27": ["13:00"]
+                    }
+                },
+                {
+                    city: "岡山", cityEn: "OKAYAMA",
+                    venue: "岡山芸術創造劇場 ハレノワ 中劇場",
+                    url: "https://stage.parco.jp/program/threeghosts/10972",
+                    start: "2026-11-06", end: "2026-11-08",
+                    shows: {
+                        "2026-11-06": ["18:00"],
+                        "2026-11-07": ["13:00", "18:00"],
+                        "2026-11-08": ["13:00"]
+                    }
+                },
+                {
+                    city: "大阪", cityEn: "OSAKA",
+                    venue: "Ｓｋｙシアター ＭＢＳ",
+                    url: "https://stage.parco.jp/program/threeghosts/10973",
+                    start: "2026-11-12", end: "2026-11-23",
+                    shows: {
+                        "2026-11-12": ["18:00"],
+                        "2026-11-13": ["13:00"],
+                        "2026-11-14": ["13:00", "18:00"],
+                        "2026-11-15": ["13:00"],
+                        "2026-11-16": ["13:00"],
+                        "2026-11-18": ["18:00"],
+                        "2026-11-19": ["13:00", "18:00"],
+                        "2026-11-20": ["13:00"],
+                        "2026-11-21": ["13:00", "18:00"],
+                        "2026-11-22": ["13:00"],
+                        "2026-11-23": ["13:00"]
+                    }
+                },
+                {
+                    city: "愛知", cityEn: "AICHI",
+                    venue: "穂の国とよはし芸術劇場 PLAT 主ホール",
+                    url: "https://stage.parco.jp/program/threeghosts/10974",
+                    start: "2026-11-27", end: "2026-11-29",
+                    shows: {
+                        "2026-11-27": ["18:00"],
+                        "2026-11-28": ["13:00", "18:00"],
+                        "2026-11-29": ["13:00"]
+                    }
+                },
+                {
+                    city: "宮崎", cityEn: "MIYAZAKI",
+                    venue: "メディキット県民文化センター（宮崎県立芸術劇場）演劇ホール",
+                    url: "https://stage.parco.jp/program/threeghosts/10975",
+                    start: "2026-12-03", end: "2026-12-06",
+                    shows: {
+                        "2026-12-03": ["16:00"],
+                        "2026-12-05": ["13:00", "18:00"],
+                        "2026-12-06": ["13:00"]
+                    }
+                },
+                {
+                    city: "福岡", cityEn: "FUKUOKA",
+                    venue: "J:COM北九州芸術劇場 大ホール",
+                    url: "https://stage.parco.jp/program/threeghosts/10976",
+                    start: "2026-12-10", end: "2026-12-13",
+                    shows: {
+                        "2026-12-10": ["18:00"],
+                        "2026-12-11": ["13:00"],
+                        "2026-12-12": ["13:00", "18:00"],
+                        "2026-12-13": ["13:00"]
+                    }
+                }
+            ];
+
+            const HOLIDAYS = new Set(["2026-10-12", "2026-11-23"]); // スポーツの日 / 勤労感謝の日
+            const WD = ["日", "月", "火", "水", "木", "金", "土"];
+            const WD_MON = ["月", "火", "水", "木", "金", "土", "日"];
+            function mondayIndex(d) { return (d.getDay() + 6) % 7; } // Monday=0 ... Sunday=6
+
+            function parseDate(s) {
+                const [y, m, d] = s.split("-").map(Number);
+                return new Date(y, m - 1, d);
+            }
+            function fmtKey(d) {
+                return d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0");
+            }
+            function fmtMD(s) {
+                const d = parseDate(s);
+                return (d.getMonth() + 1) + "月" + d.getDate() + "日(" + WD[d.getDay()] + ")";
+            }
+            function dayDiff(a, b) { return Math.round((a - b) / 86400000); }
+            function getMonthsBetween(start, end) {
+                const s = parseDate(start), e = parseDate(end);
+                const months = [];
+                let y = s.getFullYear(), m = s.getMonth();
+                while (y < e.getFullYear() || (y === e.getFullYear() && m <= e.getMonth())) {
+                    months.push({ year: y, month: m });
+                    m++; if (m > 11) { m = 0; y++; }
+                }
+                return months;
+            }
+            function buildMonthWeeks(year, month) {
+                const firstWd = mondayIndex(new Date(year, month, 1));
+                const daysInMonth = new Date(year, month + 1, 0).getDate();
+                const cells = [];
+                for (let i = 0; i < firstWd; i++) cells.push(null);
+                for (let d = 1; d <= daysInMonth; d++) cells.push(new Date(year, month, d));
+                while (cells.length % 7 !== 0) cells.push(null);
+                const weeks = [];
+                for (let i = 0; i < cells.length; i += 7) weeks.push(cells.slice(i, i + 7));
+                return weeks;
+            }
+
+            function getJSTParts() {
+                const parts = new Intl.DateTimeFormat('en-US', {
+                    timeZone: 'Asia/Tokyo',
+                    year: 'numeric', month: '2-digit', day: '2-digit',
+                    hour: '2-digit', minute: '2-digit', second: '2-digit',
+                    hour12: false
+                }).formatToParts(new Date());
+                const map = {};
+                parts.forEach(p => { if (p.type !== 'literal') map[p.type] = parseInt(p.value, 10); });
+                if (map.hour === 24) map.hour = 0;
+                return map; // {year,month,day,hour,minute,second}
+            }
+
+            const jstNow = getJSTParts();
+            const today = new Date(jstNow.year, jstNow.month - 1, jstNow.day); // JST calendar date, used for all day-level comparisons
+            const todayDateTime = new Date(jstNow.year, jstNow.month - 1, jstNow.day, jstNow.hour, jstNow.minute, jstNow.second);
+
+            // ---------- next / status computation ----------
+            let ongoing = null, nextUpcoming = null;
+            venues.forEach(v => {
+                const s = parseDate(v.start), e = parseDate(v.end);
+                if (today >= s && today <= e) ongoing = v;
+                if (!nextUpcoming && today < s) nextUpcoming = v;
+            });
+
+            const banner = document.getElementById("nextBanner");
+            if (ongoing) {
+                banner.innerHTML =
+                    '<div class="nb-eyebrow">NOW PLAYING</div>' +
+                    '<div class="nb-main">' + ongoing.city + '公演、開催中です</div>' +
+                    '<div class="nb-sub">' + ongoing.venue + ' ・ ' + fmtMD(ongoing.start) + '〜' + fmtMD(ongoing.end) + '</div>';
+            } else if (nextUpcoming) {
+                const d = dayDiff(parseDate(nextUpcoming.start), today);
+                banner.innerHTML =
+                    '<div class="nb-eyebrow">NEXT STATION</div>' +
+                    '<div class="nb-main">' + nextUpcoming.city + '公演まで　あと<b>' + d + '</b>日</div>' +
+                    '<div class="nb-sub">' + nextUpcoming.venue + ' ・ ' + fmtMD(nextUpcoming.start) + ' 開幕</div>';
+            } else {
+                banner.innerHTML =
+                    '<div class="nb-eyebrow">TOUR COMPLETE</div>' +
+                    '<div class="nb-main">全公演が終了しました</div>' +
+                    '<div class="nb-sub">スリーゴーストは、ここからゴーストになりました。</div>';
+            }
+
+            // ---------- build stations ----------
+            const stationsEl = document.getElementById("stations");
+
+            venues.forEach(v => {
+                const s = parseDate(v.start), e = parseDate(v.end);
+                let status, badgeText;
+                if (today < s) {
+                    status = "upcoming";
+                    badgeText = "あと" + dayDiff(s, today) + "日";
+                } else if (today > e) {
+                    status = "past";
+                    badgeText = "公演終了";
+                } else {
+                    status = "ongoing";
+                    badgeText = "公演中";
+                }
+
+                const months = getMonthsBetween(v.start, v.end);
+                const monthsHtml = months.map(({ year, month }) => {
+                    const weeks = buildMonthWeeks(year, month);
+                    const weeksHtml = weeks.map(week => {
+                        const cellsHtml = week.map(d => {
+                            if (!d) return '<div class="chip pad"></div>';
+
+                            const key = fmtKey(d);
+                            const wd = d.getDay();
+                            const hasShow = !!v.shows[key];
+                            const isPreview = v.preview && v.preview.includes(key);
+                            const inRange = d >= s && d <= e;
+
+                            let wdClass = "";
+                            if (wd === 0) wdClass = "wd-sun"; else if (wd === 6) wdClass = "wd-sat";
+                            if (HOLIDAYS.has(key)) wdClass = "wd-holiday";
+
+                            let timesHtml = "";
+                            if (hasShow) {
+                                timesHtml = '<div class="chip-times">' + v.shows[key].map(() => '<span class="t"></span>').join("") + '</div>';
+                            }
+                            if (isPreview) {
+                                timesHtml = '<div class="chip-times"><span class="t preview">☆</span></div>';
+                            }
+
+                            let title = "";
+                            if (inRange) {
+                                const tooltipTimes = hasShow ? v.shows[key].join(" / ") + (isPreview ? "（プレビュー）" : "") : "公演なし（休演日）";
+                                const diff = dayDiff(d, today);
+                                const diffLabel = diff > 0 ? "あと" + diff + "日" : (diff === 0 ? "本日" : Math.abs(diff) + "日前");
+                                title = (d.getMonth() + 1) + "月" + d.getDate() + "日(" + WD[wd] + ") " + tooltipTimes + (hasShow ? (" ・ " + diffLabel) : "");
+                            }
+
+                            const stateClass = hasShow ? "has-show" : (inRange ? "rest" : "outside");
+
+                            return '<div class="chip ' + stateClass + ' ' + wdClass + '" ' +
+                                (hasShow ? ('data-url="' + v.url + '" ') : '') +
+                                (title ? ('title="' + title + '" ') : '') +
+                                '>' +
+                                '<span class="chip-day">' + d.getDate() + '</span>' +
+                                timesHtml +
+                                '</div>';
+                        }).join("");
+                        return '<div class="month-grid">' + cellsHtml + '</div>';
+                    }).join("");
+
+                    return '<div class="month-block">' +
+                        '<div class="month-label">' + year + '年' + (month + 1) + '月</div>' +
+                        '<div class="weekday-row">' + WD_MON.map((w, i) => '<span class="' + (i === 5 ? 'wd-sat' : (i === 6 ? 'wd-sun' : '')) + '">' + w + '</span>').join("") + '</div>' +
+                        weeksHtml +
+                        '</div>';
+                }).join("");
+
+                const section = document.createElement("div");
+                section.className = "station";
+                section.setAttribute("data-status", status);
+                section.innerHTML =
+                    '<div class="station-marker">' + (status === "past" ? GHOST_ICON : "") + '</div>' +
+                    '<div class="station-head">' +
+                    '<div class="city-block">' +
+                    '<span class="city-eyebrow">' + v.cityEn + '</span>' +
+                    '<span class="city-name">' + v.city + '</span>' +
+                    '</div>' +
+                    '<span class="countdown-badge">' + badgeText + '</span>' +
+                    '<div class="venue-name">' + v.venue + '</div>' +
+                    '</div>' +
+                    '<div class="date-range">' + fmtMD(v.start) + ' 〜 ' + fmtMD(v.end) + (v.note ? ' ・ ' + v.note : '') + '</div>' +
+                    '<div class="chip-grid">' + monthsHtml + '</div>' +
+                    '<div class="station-actions">' +
+                    '<a class="detail-link" href="' + v.url + '" target="_blank" rel="noopener">会場詳細・チケット購入 →</a>' +
+                    '</div>';
+                stationsEl.appendChild(section);
+            });
+
+            // click handling for chips
+            stationsEl.addEventListener("click", function (e) {
+                const chip = e.target.closest(".chip.has-show");
+                if (chip && chip.dataset.url) {
+                    window.open(chip.dataset.url, "_blank", "noopener");
+                }
+            });
+
+            // ---------- ghost marker position ----------
+            function positionGhost() {
+                const markers = Array.from(document.querySelectorAll(".station-marker"));
+                if (markers.length < 1) return;
+                const stationsRect = stationsEl.getBoundingClientRect();
+                const firstY = markers[0].getBoundingClientRect().top - stationsRect.top + markers[0].offsetHeight / 2;
+                const lastY = markers[markers.length - 1].getBoundingClientRect().top - stationsRect.top + markers[markers.length - 1].offsetHeight / 2;
+
+                const tourStart = parseDate(venues[0].start);
+                const tourEnd = parseDate(venues[venues.length - 1].end);
+                let progress = (today - tourStart) / (tourEnd - tourStart);
+                progress = Math.max(0, Math.min(1, progress));
+
+                const y = firstY + progress * (lastY - firstY);
+                document.getElementById("ghostMarker").style.top = y + "px";
+            }
+            positionGhost();
+            window.addEventListener("resize", positionGhost);
+
+            // ---------- stats grid: total / remaining / live JST clock ----------
+            let totalShows = 0;
+            venues.forEach(v => { Object.values(v.shows).forEach(arr => { totalShows += arr.length; }); });
+
+            function countRemaining(nowDT) {
+                let n = 0;
+                venues.forEach(v => {
+                    Object.keys(v.shows).forEach(key => {
+                        const [yy, mm, dd] = key.split("-").map(Number);
+                        v.shows[key].forEach(t => {
+                            const [hh, mi] = t.split(":").map(Number);
+                            const dt = new Date(yy, mm - 1, dd, hh, mi);
+                            if (dt >= nowDT) n++;
+                        });
+                    });
+                });
+                return n;
+            }
+
+            const statsGrid = document.getElementById("statsGrid");
+            const remainingNow = countRemaining(todayDateTime);
+
+            statsGrid.innerHTML =
+                '<div class="stat-card">' +
+                '<div class="sc-eyebrow">TOTAL</div>' +
+                '<div class="sc-value">' + totalShows + '<small>公演</small></div>' +
+                '</div>' +
+                '<div class="stat-card">' +
+                '<div class="sc-eyebrow">REMAINING</div>' +
+                '<div class="sc-value" id="remainingValue">' + remainingNow + '<small>公演</small></div>' +
+                '</div>';
+
+            function tickClock() {
+                const j = getJSTParts();
+                const d = new Date(j.year, j.month - 1, j.day);
+                const dateStr = j.year + "年" + j.month + "月" + j.day + "日(" + WD[d.getDay()] + ")";
+                const timeStr = String(j.hour).padStart(2, "0") + ":" + String(j.minute).padStart(2, "0") + ":" + String(j.second).padStart(2, "0");
+                const elDate = document.getElementById("tcDate");
+                const elTime = document.getElementById("tcTime");
+                if (elDate) elDate.textContent = dateStr;
+                if (elTime) elTime.textContent = timeStr;
+            }
+            tickClock();
+            setInterval(tickClock, 1000);
+
+        })();
+    </script>
+
+</body>
+
+</html>
