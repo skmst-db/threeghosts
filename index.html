@@ -111,6 +111,43 @@
             line-height: 1.5;
         }
 
+        .more-videos-wrap {
+            margin-top: 18px;
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        .more-videos-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            font-family: var(--mono);
+            font-size: 11px;
+            color: var(--ink-soft);
+            text-decoration: none;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            border-bottom: 1.5px solid var(--line);
+            padding-bottom: 2px;
+            transition: color 0.2s ease, border-color 0.2s ease;
+        }
+
+        .more-videos-link svg {
+            width: 10px;
+            height: 10px;
+            stroke-width: 2.5;
+            transition: transform 0.2s ease;
+        }
+
+        .more-videos-link:hover {
+            color: var(--red);
+            border-color: var(--red-soft);
+        }
+
+        .more-videos-link:hover svg {
+            transform: translate(2px, -2px);
+        }
+
         /* ---------- RIGHT: schedule content ---------- */
         .layout-right {
             flex: 1 1 0;
@@ -652,33 +689,98 @@
             }
         }
 
-        .station-actions {
+        /* ---------- MONTH VENUES LIST ---------- */
+        .month-venues {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: 14px;
+            margin-bottom: 24px;
+        }
+
+        .month-venue-item {
+            background: var(--card);
+            border: 1px solid var(--line-soft);
+            border-radius: var(--radius);
+            padding: 12px 16px;
             display: flex;
             align-items: center;
-            gap: 14px;
-            flex-wrap: wrap;
-        }
-
-        .detail-link {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
+            justify-content: space-between;
+            gap: 16px;
             font-size: 13px;
-            font-weight: 600;
-            text-decoration: none;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.02);
+            transition: border-color 0.15s ease, box-shadow 0.15s ease;
+        }
+
+        .month-venue-item:hover {
+            border-color: var(--line);
+            box-shadow: 0 4px 12px -4px rgba(28, 34, 48, 0.08);
+        }
+
+        .mv-info {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            min-width: 0;
+        }
+
+        .mv-title-row {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .mv-city {
+            font-family: var(--sans);
+            font-weight: 700;
+            color: #fff;
+            background: var(--ink);
+            padding: 2px 7px;
+            border-radius: 4px;
+            font-size: 10.5px;
+            letter-spacing: 0.05em;
+        }
+
+        .mv-name {
+            font-family: var(--serif);
+            font-weight: 700;
             color: var(--ink);
-            border-bottom: 1px solid var(--ink);
-            padding-bottom: 2px;
+            font-size: 14px;
         }
 
-        .detail-link:hover {
+        .mv-dates {
+            font-size: 12px;
+            color: var(--ink-soft);
+        }
+
+        .mv-link {
+            font-family: var(--sans);
+            font-weight: 600;
             color: var(--red);
-            border-color: var(--red);
+            text-decoration: none;
+            border-bottom: 1.5px solid transparent;
+            white-space: nowrap;
+            transition: border-color 0.15s ease, color 0.15s ease;
+            font-size: 12.5px;
         }
 
-        .note {
-            font-size: 11.5px;
-            color: var(--ink-faint);
+        .mv-link:hover {
+            color: var(--red-soft);
+            border-color: var(--red-soft);
+        }
+
+        @media (max-width: 480px) {
+            .month-venue-item {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 8px;
+                padding: 12px 14px;
+            }
+
+            .mv-link {
+                align-self: flex-end;
+            }
         }
 
         /* ---------- FOOTER ---------- */
@@ -692,7 +794,7 @@
         }
 
         .page-footer p {
-            margin: 4px 0;
+            margin: 12px 0;
         }
 
         .page-footer a {
@@ -742,6 +844,16 @@
                                 allowfullscreen loading="lazy"></iframe>
                         </div>
                     </div>
+
+                    <div class="more-videos-wrap">
+                        <a class="more-videos-link" href="https://www.youtube.com/playlist?list=PLb3-rHGeF5PiexT0vA-pDoQKxbYAQBRR8" target="_blank" rel="noopener">
+                            More Videos
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                <line x1="7" y1="17" x2="17" y2="7"></line>
+                                <polyline points="7 7 17 7 17 17"></polyline>
+                            </svg>
+                        </a>
+                    </div>
                 </div>
             </aside>
 
@@ -779,16 +891,18 @@
                         </div>
                     </div>
 
-                    <div class="page-footer">
-                        <p>出演：堺雅人・倉科カナ・伊勢佳世・迫田孝也・sara・小日向星一／高畑淳子・段田安則</p>
-                        <p>本ページは <a href="https://stage.parco.jp/program/threeghosts/" target="_blank"
-                                rel="noopener">PARCO
-                                STAGE公式サイト</a> の公開情報をもとに作成した非公式の観覧用カレンダーです。最新の情報・上演時間・チケット詳細は必ず各会場の公式ページでご確認ください。</p>
-                    </div>
-
                 </div>
             </div>
 
+        </div>
+
+        <div class="page-footer">
+            <p>出演：堺雅人・倉科カナ・伊勢佳世・迫田孝也・sara・小日向星一／高畑淳子・段田安則</p>
+
+            <p>本ページは <a href="https://stage.parco.jp/program/threeghosts/" target="_blank" rel="noopener">PARCO
+                    STAGE公式サイト</a> の公開情報をもとに作成した非公式の観覧用カレンダーです。最新の情報・上演時間・チケット詳細は必ず各会場の公式ページでご確認ください。</p>
+
+            <p><strong>designed by <a href="https://x.com/h2col43" target="_blank" rel="noopener">h2col</a></strong></p>
         </div>
     </div>
 
@@ -950,42 +1064,85 @@
             const todayDateTime = new Date(jstNow.year, jstNow.month - 1, jstNow.day, jstNow.hour, jstNow.minute, jstNow.second);
 
             // ---------- next / status computation ----------
-            let ongoing = null, nextUpcoming = null;
-            venues.forEach(v => {
-                const s = parseDate(v.start), e = parseDate(v.end);
-                if (today >= s && today <= e) ongoing = v;
-                if (!nextUpcoming && today < s) nextUpcoming = v;
-            });
+            const todayKey = fmtKey(today);
+            const todayVenue = venues.find(v => !!v.shows[todayKey]);
 
             const banner = document.getElementById("nextBanner");
-            if (ongoing) {
+
+            if (todayVenue) {
+                // Today has a show
+                const todayTimes = todayVenue.shows[todayKey].join("/");
                 banner.innerHTML =
                     '<div class="nb-eyebrow">NOW PLAYING</div>' +
-                    '<div class="nb-main">' + ongoing.city + '公演、開催中です</div>' +
-                    '<div class="nb-sub">' + ongoing.venue + ' ・ ' + fmtMD(ongoing.start) + '〜' + fmtMD(ongoing.end) + '</div>';
-            } else if (nextUpcoming) {
-                const d = dayDiff(parseDate(nextUpcoming.start), today);
-                banner.innerHTML =
-                    '<div class="nb-eyebrow">NEXT STATION</div>' +
-                    '<div class="nb-main">' + nextUpcoming.city + '公演まで　あと<b>' + d + '</b>日</div>' +
-                    '<div class="nb-sub">' + nextUpcoming.venue + ' ・ ' + fmtMD(nextUpcoming.start) + ' 開幕</div>';
+                    '<div class="nb-main">' + todayVenue.city + '公演、今日 ' + todayTimes + '</div>' +
+                    '<div class="nb-sub">' + todayVenue.venue + ' ・ ' + fmtMD(todayVenue.start) + '〜' + fmtMD(todayVenue.end) + '</div>';
             } else {
-                banner.innerHTML =
-                    '<div class="nb-eyebrow">TOUR COMPLETE</div>' +
-                    '<div class="nb-main">全公演が終了しました</div>' +
-                    '<div class="nb-sub">スリーゴーストは、ここからゴーストになりました。</div>';
+                // Today has no show - find the next upcoming show
+                const allFutureShows = [];
+                venues.forEach(v => {
+                    Object.keys(v.shows).forEach(dateStr => {
+                        const d = parseDate(dateStr);
+                        if (d >= today) {
+                            allFutureShows.push({ venue: v, date: d });
+                        }
+                    });
+                });
+                allFutureShows.sort((a, b) => a.date - b.date);
+
+                if (allFutureShows.length > 0) {
+                    const nextShow = allFutureShows[0];
+                    const nextShowVenue = nextShow.venue;
+                    const nextShowDate = nextShow.date;
+                    const d = dayDiff(nextShowDate, today);
+
+                    banner.innerHTML =
+                        '<div class="nb-eyebrow">NEXT STATION</div>' +
+                        '<div class="nb-main">' + nextShowVenue.city + '公演まで　あと<b>' + d + '</b>日</div>' +
+                        '<div class="nb-sub">' + nextShowVenue.venue + ' ・ ' + fmtMD(nextShowVenue.start) + '〜' + fmtMD(nextShowVenue.end) + '</div>';
+                } else {
+                    // All shows completed
+                    banner.innerHTML =
+                        '<div class="nb-eyebrow">TOUR COMPLETE</div>' +
+                        '<div class="nb-main">全公演が終了しました</div>' +
+                        '<div class="nb-sub">スリーゴーストは、ここからゴーストになりました。</div>';
+                }
             }
 
-            // ---------- build stations ----------
+            // ---------- build stations (grouped by month) ----------
             const stationsEl = document.getElementById("stations");
 
-            venues.forEach(v => {
-                const s = parseDate(v.start), e = parseDate(v.end);
+            const firstVenue = venues[0];
+            const lastVenue = venues[venues.length - 1];
+            const allMonths = getMonthsBetween(firstVenue.start, lastVenue.end);
+
+            allMonths.forEach(({ year, month }) => {
+                const monthVenues = venues.filter(v => {
+                    return Object.keys(v.shows).some(dateKey => {
+                        const [y, m] = dateKey.split("-").map(Number);
+                        return y === year && (m - 1) === month;
+                    });
+                });
+
+                if (monthVenues.length === 0) return;
+
+                const monthShowDates = [];
+                monthVenues.forEach(v => {
+                    Object.keys(v.shows).forEach(dateKey => {
+                        const [y, m, d] = dateKey.split("-").map(Number);
+                        if (y === year && (m - 1) === month) {
+                            monthShowDates.push(new Date(y, m - 1, d));
+                        }
+                    });
+                });
+                monthShowDates.sort((a, b) => a - b);
+                const firstShow = monthShowDates[0];
+                const lastShow = monthShowDates[monthShowDates.length - 1];
+
                 let status, badgeText;
-                if (today < s) {
+                if (today < firstShow) {
                     status = "upcoming";
-                    badgeText = "あと" + dayDiff(s, today) + "日";
-                } else if (today > e) {
+                    badgeText = "あと" + dayDiff(firstShow, today) + "日";
+                } else if (today > lastShow) {
                     status = "past";
                     badgeText = "公演終了";
                 } else {
@@ -993,56 +1150,73 @@
                     badgeText = "公演中";
                 }
 
-                const months = getMonthsBetween(v.start, v.end);
-                const monthsHtml = months.map(({ year, month }) => {
-                    const weeks = buildMonthWeeks(year, month);
-                    const weeksHtml = weeks.map(week => {
-                        const cellsHtml = week.map(d => {
-                            if (!d) return '<div class="chip pad"></div>';
+                const weeks = buildMonthWeeks(year, month);
+                const weeksHtml = weeks.map(week => {
+                    const cellsHtml = week.map(d => {
+                        if (!d) return '<div class="chip pad"></div>';
 
-                            const key = fmtKey(d);
-                            const wd = d.getDay();
-                            const hasShow = !!v.shows[key];
-                            const isPreview = v.preview && v.preview.includes(key);
-                            const inRange = d >= s && d <= e;
+                        const key = fmtKey(d);
+                        const wd = d.getDay();
 
-                            let wdClass = "";
-                            if (wd === 0) wdClass = "wd-sun"; else if (wd === 6) wdClass = "wd-sat";
-                            if (HOLIDAYS.has(key)) wdClass = "wd-holiday";
+                        const activeVenue = monthVenues.find(v => !!v.shows[key]);
+                        const hasShow = !!activeVenue;
+                        const isPreview = activeVenue && activeVenue.preview && activeVenue.preview.includes(key);
+                        const inRange = monthVenues.some(v => d >= parseDate(v.start) && d <= parseDate(v.end));
 
-                            let timesHtml = "";
+                        let wdClass = "";
+                        if (wd === 0) wdClass = "wd-sun"; else if (wd === 6) wdClass = "wd-sat";
+                        if (HOLIDAYS.has(key)) wdClass = "wd-holiday";
+
+                        let timesHtml = "";
+                        if (hasShow) {
+                            timesHtml = '<div class="chip-times">' + activeVenue.shows[key].map(() => '<span class="t"></span>').join("") + '</div>';
+                        }
+                        if (isPreview) {
+                            timesHtml = '<div class="chip-times"><span class="t preview">☆</span></div>';
+                        }
+
+                        let title = "";
+                        if (inRange) {
                             if (hasShow) {
-                                timesHtml = '<div class="chip-times">' + v.shows[key].map(() => '<span class="t"></span>').join("") + '</div>';
-                            }
-                            if (isPreview) {
-                                timesHtml = '<div class="chip-times"><span class="t preview">☆</span></div>';
-                            }
-
-                            let title = "";
-                            if (inRange) {
-                                const tooltipTimes = hasShow ? v.shows[key].join(" / ") + (isPreview ? "（プレビュー）" : "") : "公演なし（休演日）";
+                                const tooltipTimes = activeVenue.shows[key].join(" / ") + (isPreview ? "（プレビュー）" : "");
                                 const diff = dayDiff(d, today);
                                 const diffLabel = diff > 0 ? "あと" + diff + "日" : (diff === 0 ? "本日" : Math.abs(diff) + "日前");
-                                title = (d.getMonth() + 1) + "月" + d.getDate() + "日(" + WD[wd] + ") " + tooltipTimes + (hasShow ? (" ・ " + diffLabel) : "");
+                                title = (d.getMonth() + 1) + "月" + d.getDate() + "日(" + WD[wd] + ") [" + activeVenue.city + "] " + tooltipTimes + " ・ " + diffLabel;
+                            } else {
+                                title = (d.getMonth() + 1) + "月" + d.getDate() + "日(" + WD[wd] + ") 公演なし（休演日）";
                             }
+                        }
 
-                            const stateClass = hasShow ? "has-show" : (inRange ? "rest" : "outside");
+                        const stateClass = hasShow ? "has-show" : (inRange ? "rest" : "outside");
 
-                            return '<div class="chip ' + stateClass + ' ' + wdClass + '" ' +
-                                (hasShow ? ('data-url="' + v.url + '" ') : '') +
-                                (title ? ('title="' + title + '" ') : '') +
-                                '>' +
-                                '<span class="chip-day">' + d.getDate() + '</span>' +
-                                timesHtml +
-                                '</div>';
-                        }).join("");
-                        return '<div class="month-grid">' + cellsHtml + '</div>';
+                        return '<div class="chip ' + stateClass + ' ' + wdClass + '" ' +
+                            (hasShow ? ('data-url="' + activeVenue.url + '" ') : '') +
+                            (title ? ('title="' + title + '" ') : '') +
+                            '>' +
+                            '<span class="chip-day">' + d.getDate() + '</span>' +
+                            timesHtml +
+                            '</div>';
                     }).join("");
+                    return '<div class="month-grid">' + cellsHtml + '</div>';
+                }).join("");
 
-                    return '<div class="month-block">' +
-                        '<div class="month-label">' + year + '年' + (month + 1) + '月</div>' +
-                        '<div class="weekday-row">' + WD_MON.map((w, i) => '<span class="' + (i === 5 ? 'wd-sat' : (i === 6 ? 'wd-sun' : '')) + '">' + w + '</span>').join("") + '</div>' +
-                        weeksHtml +
+                const monthNameEn = ["JANUARY", "FEBRUARY", "MARCH", "APRIL", "MAY", "JUNE", "JULY", "AUGUST", "SEPTEMBER", "OCTOBER", "NOVEMBER", "DECEMBER"][month];
+
+                const venuesHtml = monthVenues.map(v => {
+                    const showsInMonthCount = Object.keys(v.shows).filter(dateKey => {
+                        const [y, m] = dateKey.split("-").map(Number);
+                        return y === year && (m - 1) === month;
+                    }).reduce((sum, key) => sum + v.shows[key].length, 0);
+
+                    return '<div class="month-venue-item">' +
+                        '<div class="mv-info">' +
+                        '<div class="mv-title-row">' +
+                        '<span class="mv-city">' + v.city + '</span>' +
+                        '<span class="mv-name">' + v.venue + '</span>' +
+                        '</div>' +
+                        '<div class="mv-dates">' + fmtMD(v.start) + ' 〜 ' + fmtMD(v.end) + '（' + showsInMonthCount + '公演）</div>' +
+                        '</div>' +
+                        '<a class="mv-link" href="' + v.url + '" target="_blank" rel="noopener">詳細・チケット →</a>' +
                         '</div>';
                 }).join("");
 
@@ -1053,17 +1227,18 @@
                     '<div class="station-marker">' + (status === "past" ? GHOST_ICON : "") + '</div>' +
                     '<div class="station-head">' +
                     '<div class="city-block">' +
-                    '<span class="city-eyebrow">' + v.cityEn + '</span>' +
-                    '<span class="city-name">' + v.city + '</span>' +
+                    '<span class="city-eyebrow">' + monthNameEn + '</span>' +
+                    '<span class="city-name">' + year + '年' + (month + 1) + '月</span>' +
                     '</div>' +
-                    '<span class="countdown-badge">' + badgeText + '</span>' +
-                    '<div class="venue-name">' + v.venue + '</div>' +
                     '</div>' +
-                    '<div class="date-range">' + fmtMD(v.start) + ' 〜 ' + fmtMD(v.end) + (v.note ? ' ・ ' + v.note : '') + '</div>' +
-                    '<div class="chip-grid">' + monthsHtml + '</div>' +
-                    '<div class="station-actions">' +
-                    '<a class="detail-link" href="' + v.url + '" target="_blank" rel="noopener">会場詳細・チケット購入 →</a>' +
+                    '<div class="month-venues">' + venuesHtml + '</div>' +
+                    '<div class="chip-grid">' +
+                    '<div class="month-block" style="margin-top: 10px;">' +
+                    '<div class="weekday-row">' + WD_MON.map((w, i) => '<span class="' + (i === 5 ? 'wd-sat' : (i === 6 ? 'wd-sun' : '')) + '">' + w + '</span>').join("") + '</div>' +
+                    weeksHtml +
+                    '</div>' +
                     '</div>';
+
                 stationsEl.appendChild(section);
             });
 
