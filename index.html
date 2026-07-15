@@ -148,6 +148,101 @@
             transform: translate(2px, -2px);
         }
 
+        /* ---------- TICKET BOOKMARKS ---------- */
+        .ticket-bookmarks-container {
+            margin-bottom: 24px;
+        }
+
+        .bookmark-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+        }
+
+        .bookmark-card {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: var(--card);
+            border: 1px solid var(--line-soft);
+            border-radius: var(--radius);
+            padding: 14px 18px;
+            text-decoration: none;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.02);
+            transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .bookmark-info {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+            min-width: 0;
+        }
+
+        .bookmark-title {
+            font-size: 13.5px;
+            font-weight: 600;
+            color: var(--ink);
+            letter-spacing: 0.02em;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .bookmark-desc {
+            font-family: var(--mono);
+            font-size: 9.5px;
+            color: var(--ink-faint);
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .bookmark-arrow {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: var(--canvas-deep);
+            color: var(--ink-soft);
+            flex-shrink: 0;
+            transition: all 0.2s ease;
+        }
+
+        .bookmark-arrow svg {
+            width: 11px;
+            height: 11px;
+            stroke-width: 2.8;
+            transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .bookmark-card:hover {
+            border-color: var(--red-soft);
+            background: #fff;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px -4px rgba(28, 34, 48, 0.15);
+        }
+
+        .bookmark-card:hover .bookmark-arrow {
+            background: var(--red);
+            color: #fff;
+        }
+
+        .bookmark-card:hover .bookmark-arrow svg {
+            transform: translate(1px, -1px);
+        }
+
+        @media (max-width: 768px) {
+            .bookmark-grid {
+                grid-template-columns: 1fr;
+                gap: 10px;
+            }
+        }
+
         /* ---------- RIGHT: schedule content ---------- */
         .layout-right {
             flex: 1 1 0;
@@ -877,6 +972,49 @@
                             <span class="tc-date" id="tcDate"></span>
                             <span class="tc-time" id="tcTime"></span>
                         </div>
+
+                        <!-- Ticket Bookmarks -->
+                        <div class="ticket-bookmarks-container">
+                            <div class="bookmark-grid">
+                                <a class="bookmark-card" href="https://t.pia.jp/pia/event/event.do?eventBundleCd=b2669724" target="_blank" rel="noopener">
+                                    <div class="bookmark-info">
+                                        <div class="bookmark-title">チケットぴあ</div>
+                                        <div class="bookmark-desc">Ticket Pia</div>
+                                    </div>
+                                    <div class="bookmark-arrow">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                            <line x1="7" y1="17" x2="17" y2="7"></line>
+                                            <polyline points="7 7 17 7 17 17"></polyline>
+                                        </svg>
+                                    </div>
+                                </a>
+                                <a class="bookmark-card" href="https://eplus.jp/sf/detail/4569360001" target="_blank" rel="noopener">
+                                    <div class="bookmark-info">
+                                        <div class="bookmark-title">イープラス</div>
+                                        <div class="bookmark-desc">eplus</div>
+                                    </div>
+                                    <div class="bookmark-arrow">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                            <line x1="7" y1="17" x2="17" y2="7"></line>
+                                            <polyline points="7 7 17 7 17 17"></polyline>
+                                        </svg>
+                                    </div>
+                                </a>
+                                <a class="bookmark-card" href="https://l-tike.com/play/mevent/?mid=788624" target="_blank" rel="noopener">
+                                    <div class="bookmark-info">
+                                        <div class="bookmark-title">ローチケ</div>
+                                        <div class="bookmark-desc">Lawson Ticket</div>
+                                    </div>
+                                    <div class="bookmark-arrow">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                            <line x1="7" y1="17" x2="17" y2="7"></line>
+                                            <polyline points="7 7 17 7 17 17"></polyline>
+                                        </svg>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+
                         <div class="stations" id="stations">
                             <div class="ghost-marker" id="ghostMarker">
                                 <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
